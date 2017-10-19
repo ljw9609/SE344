@@ -1,0 +1,4 @@
+﻿  main.cpp
+\\mac\home\documents\visual studio 2015\projects\bouncingball\bouncingball\main.cpp(39): warning C4838: 从“double”转换到“GLfloat”需要收缩转换
+  BouncingBall.vcxproj -> \\mac\home\documents\visual studio 2015\Projects\BouncingBall\Debug\BouncingBall.exe
+  BouncingBall.vcxproj -> \\mac\home\documents\visual studio 2015\Projects\BouncingBall\Debug\BouncingBall.pdb (Full PDB)
