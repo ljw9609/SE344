@@ -1,9 +1,8 @@
-#ifndef particle_h
-#define particle_h
-
+#pragma once
 #include <iostream>
 #include <stdio.h>
-
+#include "eigen.h"
+#include <math.h>
 #ifdef __APPLE__
 #include <glut/glut.h>
 #include "GL/glew.h"
@@ -15,95 +14,65 @@
 #include <GL/GLTools.h>
 #endif
 
-/** 粒子结构 */
-struct Particle
-{
-	float x, y, z;            /**< 粒子的位置 */
-	unsigned int  r, g, b;    /**< 粒子的颜色 */
-	float vx, vy, vz;         /**< 粒子的速度(x,y,z方向) */
-	float ax, ay, az;         /**< 粒子在x，y，z上的加速度 */
-	float lifetime;         /**< 粒子生命值 */
-	float size;             /**< 粒子尺寸 */
-	float dec;              /**< 粒子消失的速度 */
+//单个粒子类
+class Particle {
+private:
+	Vector3d velo;		//速度
+	Vector3d acc;		//加速度
+	Vector3d color;		//颜色
+	Vector3d position;	//位置
+	Vector3d size;		//大小
+	Vector3d angle;		//角度
+
+	float lifetime;		//生命值
+	float dec;			//消失速度
+	GLuint texture;		//纹理
+	
+	bool has_tex;		//是否有纹理
+	bool is_forever;    //是否永存
+
+	unsigned int motion_mode;
+	float ftheta;
+
+	void draw_with_tex(GLuint texture);
+	void draw_with_color();
+	
+public:
+	Particle();
+	~Particle();
+	Particle(Vector3d init_velo, Vector3d init_acc, Vector3d init_size, Vector3d init_angle, bool init_has_tex,
+		Vector3d init_color, GLuint init_tex, float init_life, float init_dec, bool init_is_forever, unsigned int init_mode);
+	void init_particle(Vector3d init_velo, Vector3d init_acc, Vector3d init_pos, Vector3d init_size, Vector3d init_angle, bool init_has_tex,
+					   Vector3d init_color,GLuint init_tex, float init_life, float init_dec, bool init_is_forever);
+	void draw();
+	void update();
+
+	void setPosition(Vector3d pos);
+	Vector3d getPosition();
+	float getLifetime();
+	Vector3d getVelocity();
+	bool isForever();
 };
 
-/** 粒子类 */
-class CParticle
-{
+//粒子系统类
+class ParticleSystem {
 private:
-	Particle*   data;               /**< 粒子指针 */
-	int         numparticle;        /**< 粒子数目 */
+	float x1, y1, z1, x2, y2, z2;
+	Particle **data;				//单个粒子
+	int particle_num;				//系统内粒子个数
+
+	bool *dead;						//粒子状态
+	Particle* (*f)();				//返回Particle类指针的函数的指针
+
+	bool(*out_of_bound)(Particle*);	
 
 public:
-	CParticle();          /**< 构造函数 */
-	~CParticle();         /**< 析构函数 */
-
-						  /** 创建粒子数组 */
-	int Create(long num);
-
-	/** 设置和获取颜色属性 */
-	int SetColor(GLint r, GLint g, GLint b);
-	int SetColor(GLint index, GLint r, GLint g, GLint b);
-	int GetColor(GLint index, GLint &r, GLint &g, GLint &b);
-
-	/** 设置和获取速度属性 */
-	int SetVelocity(GLfloat vx, GLfloat vy, GLfloat vz);
-	int SetVelocity(GLint index, GLfloat vx, GLfloat vy, GLfloat vz);
-	int GetVelocity(GLint index, GLfloat &vx, GLfloat &vy, GLfloat &vz);
-
-	/** 设置和获取位置属性 */
-	int SetPosition(GLfloat x, GLfloat y, GLfloat z);
-	int SetPosition(GLint index, GLfloat x, GLfloat y, GLfloat z);
-	int GetPosition(GLint index, GLfloat &x, GLfloat &y, GLfloat &z);
-
-	/** 设置和获取加速度属性 */
-	int SetAcceleration(GLfloat ax, GLfloat ay, GLfloat az);
-	int SetAcceleration(GLint index, GLfloat ax, GLfloat ay, GLfloat az);
-	int GetAcceletation(GLint index, GLfloat &ax, GLfloat &ay, GLfloat &az);
-
-	/** 设置和获取尺寸属性 */
-	int SetSize(GLfloat size);
-	int SetSize(GLint index, GLfloat size);
-	int GetSize(GLint index, GLfloat &size);
-
-	/** 设置和获取消失速度属性 */
-	int SetDec(GLfloat dec);
-	int SetDec(GLint index, GLfloat dec);
-	int GetDec(GLint index, GLfloat &dec);
-
-	/** 设置和获取生命值属性 */
-	int SetLifeTime(GLfloat lifetime);
-	int SetLifeTime(GLint index, GLfloat lifetime);
-	int GetLifeTime(GLint index, GLfloat &lifetime);
-
-	/** 获取粒子数组地址 */
-	Particle *GetParticle() { return data; }
-
-	/** 获得粒子的数目 */
-	int GetNumOfParticle() { return numparticle; }
-
-	/** 获得粒子所有的属性 */
-	int GetAll(int index,                               /**< 索引 */
-		GLint &r, GLint &g, GLint &b,              /**< 粒子的颜色 */
-		GLfloat &x, GLfloat &y, GLfloat &z,        /**< 位置 */
-		GLfloat &vx, GLfloat &vy, GLfloat &vz, /**< 速度 */
-		GLfloat &ax, GLfloat &ay, GLfloat &az, /**< 加速度 */
-		GLfloat &size,                           /**< 大小 */
-		GLfloat &lifetime,                       /**< 生命时间 */
-		GLfloat &dec                         /**< 消失速度 */
-	);
-
-	/** 设置粒子的所有属性 */
-	int SetAll(int index,                           /**< 索引 */
-		GLint r, GLint g, GLint b,         /**< 粒子的颜色 */
-		GLfloat x, GLfloat y, GLfloat z,       /**< 位置 */
-		GLfloat vx, GLfloat vy, GLfloat vz,    /**< 速度 */
-		GLfloat ax, GLfloat ay, GLfloat az,    /**< 加速度 */
-		GLfloat size,                        /**< 大小 */
-		GLfloat lifetime,                    /**< 生命时间 */
-		GLfloat dec                          /**< 消失速度 */
-	);
+	ParticleSystem();
+	~ParticleSystem();
+	void init_system(Particle* (init)(), bool(*judge)(Particle*));
+	void update();
+	void reset();
+	void set_emit_position(float _x1, float _y1, float _z1, float _x2, float _y2, float _z2);
+	ParticleSystem(int init_num, float init_x1, float init_y1, float init_z1, 
+				   float init_x2, float init_y2, float init_z2);
 };
-
-#endif /* particle_h */
-#pragma once

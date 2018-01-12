@@ -156,12 +156,10 @@
     <ClInclude Include="drawScene.h" />
     <ClInclude Include="eigen.h" />
     <ClInclude Include="fence.h" />
-    <ClInclude Include="fluid.h" />
     <ClInclude Include="ground.h" />
     <ClInclude Include="objloader.h" />
-    <ClInclude Include="particle2.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="sky.h" />
-    <ClInclude Include="terrain.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="wall.h" />
@@ -169,13 +167,11 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="fence.cpp" />
-    <ClCompile Include="fluid.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="objloader.cpp" />
-    <ClCompile Include="particle2.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="sky.cpp" />
-    <ClCompile Include="terrain.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="wall.cpp" />

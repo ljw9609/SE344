@@ -1,6 +1,5 @@
 #pragma once
 #include "utility.h"
-#include "fluid.h"
 #define PI 3.1415926535
 
 void DrawCircleArea(float cx, float cy, float cz, float r, int num_segments){
@@ -30,7 +29,6 @@ void DrawCircleArea(float cx, float cy, float cz, float r, int num_segments){
 	glVertex4fv(vertex);
 	glEnd();
 }
-
 
 void draw_solid_cylinder(GLUquadric* quad, GLdouble base, GLdouble top, GLdouble height, GLint slices, GLint stacks){
 	gluCylinder(quad, base, top, height, slices, stacks);
@@ -74,14 +72,6 @@ void draw_campfire(GLuint tex) {
 }
 
 void draw_house(float x, float y, float z, GLuint *tex) {
-	/*
-	char *filename[] = { "data\\wood3.BMP","data\\darkwood.BMP","data\\roof.BMP" };
-	bool rc;
-	GLuint texture[3];
-	for (int i = 0; i < 3; i++) {
-		rc = BuildTexture(filename[i], texture[i], 0, 0, 0);
-	}
-	*/
 	GLuint *texture = tex;
 
 	glEnable(GL_TEXTURE_2D);
@@ -186,23 +176,6 @@ void draw_house(float x, float y, float z, GLuint *tex) {
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 	
-}
-
-void draw_fluid(Fluid *fluid, float x, float y, float z) {
-	static int count = 0;
-	count++;
-	if (count > 10) {
-		count = 0;
-		fluid->Evaluate();
-	}
-	glDisable(GL_LIGHTING);
-	glPushMatrix();
-	glTranslatef(x, y, z);
-	glNormal3f(0, 1.0f, 0);
-	glRotatef(90, 1, 0, 0);
-	fluid->draw();
-	glPopMatrix();
-	glEnable(GL_LIGHTING);
 }
 
 void draw_single_fountain(float _outer_length, float _inner_length, float _height, GLuint _tex) {
@@ -326,8 +299,8 @@ void draw_single_fountain(float _outer_length, float _inner_length, float _heigh
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void draw_fountain(float x, float y, float z, GLuint tex, Fluid *fountain1, Fluid *fountain2) {
-	GLuint texture = tex;
+void draw_fountain(float x, float y, float z, GLuint* tex) {
+	GLuint* texture = tex;
 
 	float half_outer_length = 7;
 	float half_inner_length = 6;
@@ -337,24 +310,50 @@ void draw_fountain(float x, float y, float z, GLuint tex, Fluid *fountain1, Flui
 	float half_inner_length2 = 2;
 	float height2 = 6;
 
-	Fluid *f1 = fountain1;
-	Fluid *f2 = fountain2;
-
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslatef(x, y, z);
-	draw_single_fountain(half_outer_length, half_inner_length, height, texture);
+	draw_single_fountain(half_outer_length, half_inner_length, height, texture[0]);
 	glPopMatrix();
 
-	draw_fluid(f1, x - half_inner_length, y + height / 2, z - half_inner_length);
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			glPushMatrix();
+			glTranslatef(24.5f+j*3, 2.0f, 15.5+i*3);
+			glBindTexture(GL_TEXTURE_2D, texture[1]);
+			glColor4ub(255, 255, 255, 255);
+			glNormal3f(0.0f, 1.0f, 0.0f);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.5f, -1.0f, 1.5f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3f(1.5f, -1.0f, 1.5f);
+			glTexCoord2f(1.0f, 1.0f); glVertex3f(1.5f, -1.0f, -1.5f);
+			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.5f, -1.0f, -1.5f);
+			glEnd();
+			glPopMatrix();
+		}
+	}
+
+
 	
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslatef(x, y, z);
-	draw_single_fountain(half_outer_length2, half_inner_length2, height2, texture);
+	draw_single_fountain(half_outer_length2, half_inner_length2, height2, texture[0]);
 	glPopMatrix();
 
-	draw_fluid(f2, x - half_inner_length2, y + height2 * 0.8, z - half_inner_length2);
+	
+	glPushMatrix();
+	glTranslatef(x, y, z);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
+	glColor4ub(255, 255, 255, 255);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-2.0f, 5.0f, 2.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(2.0f, 5.0f, 2.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(2.0f, 5.0f, -2.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-2.0f, 5.0f, -2.0f);
+	glEnd();
+	glPopMatrix();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glColor3f(1, 1, 1);
@@ -362,21 +361,35 @@ void draw_fountain(float x, float y, float z, GLuint tex, Fluid *fountain1, Flui
 	glDisable(GL_TEXTURE_2D);
 }
 
-void draw_fake_lake(float x, float y, float z, GLuint tex, Fluid *fluid) {
-	GLuint texture = tex;
-
+void draw_fake_lake(float x, float y, float z, GLuint* tex) {
+	GLuint* texture = tex;
+	
 	float half_outer_length = 12;
 	float half_inner_length = 11;
 	float height = 2;
 
-	Fluid *f = fluid;
 
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslatef(x, y, z);
-	draw_single_fountain(half_outer_length, half_inner_length, height, texture);
+	draw_single_fountain(half_outer_length, half_inner_length, height, texture[0]);
 	glPopMatrix();
 
-	draw_fluid(f, x - half_inner_length, y + height * 0.8, z - half_inner_length);
 
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			glPushMatrix();
+			glTranslatef(20.375f + j * 2.75, 1.5f, -44.625 + i * 2.75);
+			glBindTexture(GL_TEXTURE_2D, texture[1]);
+			glColor4ub(255, 255, 255, 255);
+			glNormal3f(0.0f, 1.0f, 0.0f);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.375f, -1.0f, 1.375f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3f(1.375f, -1.0f, 1.375f);
+			glTexCoord2f(1.0f, 1.0f); glVertex3f(1.375f, -1.0f, -1.375f);
+			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.375f, -1.0f, -1.375f);
+			glEnd();
+			glPopMatrix();
+		}
+	}
 }

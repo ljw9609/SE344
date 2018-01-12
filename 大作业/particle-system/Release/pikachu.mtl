@@ -7,6 +7,7 @@ illum 2
 Kd 0.8 0.8 0.8
 Ks 0.0 0.0 0.0
 Ka 0.2 0.2 0.2
+map_Ka eye1.bmp
 map_Kd eye1.bmp
 
 newmtl mouth
@@ -16,6 +17,7 @@ illum 2
 Kd 0.8 0.8 0.8
 Ks 0.0 0.0 0.0	
 Ka 0.2 0.2 0.2
+map_Ka mouth1.bmp
 map_Kd mouth1.bmp
 
 newmtl pikagen
@@ -25,5 +27,6 @@ illum 2
 Kd 0.8 0.8 0.8
 Ks 0.0 0.0 0.0
 Ka 0.2 0.2 0.2
+map_Ka pikagen.bmp
 map_Kd pikagen.bmp
 

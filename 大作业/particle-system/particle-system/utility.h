@@ -22,13 +22,8 @@
 #define BITMAP_ID 0x4D42
 
 
-//int LoadGLTextures(char *Filename, GLuint *ttexture, int i);
-GLuint LoadTextures3(const char* filename);
-//GLuint LoadTextures4(const char* filename);
-//GLuint LoadTextures5(const char* filename);
 
-//void loadTex(int i, char *filename, GLuint* texture);//一般纹理  
-//void loadTex(int i, char *filename, GLuint* texture, unsigned char* backgroundColor);//透明纹理  
+GLuint LoadTextures3(const char* filename);
 
 bool BuildTexture(char *szPathName, GLuint &texid, BYTE r, BYTE g, BYTE b);
 #endif /* utility_h */

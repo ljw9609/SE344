@@ -108,15 +108,17 @@ void AFlower::draw(float x, float y, float z) {
 
 	glPushMatrix();
 	glTranslatef(x, y, z);
-	glRotatef(-90, 1.0, 0.0, 0.0);//making the stalk straight upwards
+	glRotatef(-90, 1.0, 0.0, 0.0);
 	glColor3f(stalk_color.red, stalk_color.green, stalk_color.blue);
 	
+	/*花茎和花叶*/
 	for (int i = 0; i<stalk_size; i++){
 		
 		glRotatef(stalk_angle, x_axis_stalk, y_axis_stalk, z_axis_stalk);
 		gluCylinder(quadratic, 0.08*petal_radius, 0.08*petal_radius, 5 * petal_radius, 5, 5);
 
-		glTranslatef(0.0, 0.0, 5 * petal_radius);//going to draw next stem;
+		glTranslatef(0.0, 0.0, 5 * petal_radius);
+		
 		if (i>(stalk_size - 4) && i<stalk_size - 1){
 			for (petal = 0; petal < stalk_size - 2; petal++) {
 				glRotatef(360 / (stalk_size - 2), 0.0, 0.0, 1.0);
@@ -140,15 +142,18 @@ void AFlower::draw(float x, float y, float z) {
 				glEnd();
 			}
 		}
+	
 	}
+	
+	/*花蕊*/
 	glColor3f(0.80, 0.0, 0.0);
 	gluCylinder(quadratic, 0.08*petal_radius, 0.4*petal_radius, 0.05, 5, 3);
 	glRotatef(90, 1.0, 0.0, 0.0);
-
 	glColor3f(petal_color.red, petal_color.green, petal_color.blue);
 
 	int i = 0;
 
+	/*花瓣*/
 	for (petal = 0; petal<petals; petal++){
 		glRotatef(360 / petals, 0.0, 1.0, 0.0);
 

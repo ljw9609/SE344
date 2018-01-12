@@ -33,16 +33,10 @@
     <ClInclude Include="fence.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="particle2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="objloader.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="tree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="terrain.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="wall.h">
@@ -51,14 +45,11 @@
     <ClInclude Include="drawScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="fluid.h">
+    <ClInclude Include="particle.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -66,9 +57,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ground.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="particle2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="sky.cpp">
@@ -83,13 +71,13 @@
     <ClCompile Include="tree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="terrain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="wall.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="fluid.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,25 @@
-﻿  正在生成代码
+﻿  camera.cpp
+  fence.cpp
+  ground.cpp
+  objloader.cpp
+objloader.cpp(432): warning C4838: 从“double”转换到“float”需要收缩转换
+objloader.cpp(433): warning C4838: 从“double”转换到“float”需要收缩转换
+objloader.cpp(434): warning C4838: 从“double”转换到“float”需要收缩转换
+  particle.cpp
+  sky.cpp
+  main.cpp
+  tree.cpp
+tree.cpp(99): warning C4101: “y2”: 未引用的局部变量
+tree.cpp(99): warning C4101: “z2”: 未引用的局部变量
+tree.cpp(99): warning C4101: “x2”: 未引用的局部变量
+  utility.cpp
+utility.cpp(10): warning C4101: “height”: 未引用的局部变量
+utility.cpp(10): warning C4101: “width”: 未引用的局部变量
+utility.cpp(11): warning C4101: “success”: 未引用的局部变量
+  wall.cpp
+  正在生成代码
+\\mac\home\documents\visual studio 2015\projects\particle-system\particle-system\utility.cpp(40): warning C4715: “LoadTextures3”: 不是所有的控件路径都返回值
+  All 1116 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   已完成代码的生成
-  0 of 1096 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    24 functions had inline decision re-evaluated but remain unchanged
   particle-system.vcxproj -> \\mac\home\documents\visual studio 2015\Projects\particle-system\Release\particle-system.exe
   particle-system.vcxproj -> \\mac\home\documents\visual studio 2015\Projects\particle-system\Release\particle-system.pdb (Full PDB)
